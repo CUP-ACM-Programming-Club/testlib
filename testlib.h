@@ -1395,14 +1395,16 @@ enum TMode
 /* Outcomes 6-15 are reserved for future use. */
 enum TResult
 {
-    _ok = 0,
-    _wa = 1,
-    _pe = 2,
-    _fail = 3,
-    _dirt = 4,
-    _points = 5,
-    _unexpected_eof = 8,
-    _partially = 16
+    _ok = 4,
+    _ac = 4,
+    _wa = 6,
+    _pe = 5,
+    _fail = 15,
+    _dirt = 9,
+    _mle = 9,
+    _points = 6,
+    _unexpected_eof = 6,
+    _partially = 6
 };
 
 enum TTestlibMode
@@ -2037,6 +2039,7 @@ private:
 InStream inf;
 InStream ouf;
 InStream ans;
+InStream usercode;
 bool appesMode;
 std::string resultName;
 std::string checkerName = "untitled checker";
@@ -4043,7 +4046,7 @@ void registerTestlibCmd(int argc, char* argv[])
 
     testlibMode = _checker;
     __testlib_set_binary(stdin);
-
+    /*
     if (argc > 1 && !strcmp("--help", argv[1]))
         __testlib_help();
 
@@ -4079,10 +4082,12 @@ void registerTestlibCmd(int argc, char* argv[])
             appesMode = true;
         }
     }
-
+    */
+    resultName = "";
+    appesMode = false;
     inf.init(argv[1], _input);
-    ouf.init(argv[2], _output);
-    ans.init(argv[3], _answer);
+    ans.init(argv[2], _answer);
+    ouf.init(argv[3], _output);
 }
 
 void registerTestlib(int argc, ...)
